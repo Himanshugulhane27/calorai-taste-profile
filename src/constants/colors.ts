@@ -7,23 +7,28 @@
  */
 
 export const CalorAIColors = {
-  // Primary brand gradient
-  gradientStart: '#6366F1',
-  gradientEnd: '#8B5CF6',
+  // ─── Background gradient (dark theme) ────────────────────────
+  bgGradientStart: '#0A0E1A',
+  bgGradientEnd: '#1A1F35',
 
-  // Glass card tokens
+  // ─── Brand accent ────────────────────────────────────────────
+  accent: '#4ADE80',
+  accentPressed: '#22C55E',
+
+  // ─── Glass card tokens ───────────────────────────────────────
   glassBg: 'rgba(255, 255, 255, 0.12)',
   glassBorder: 'rgba(255, 255, 255, 0.18)',
 
-  // Swipe feedback overlays
+  // ─── Swipe feedback overlays ─────────────────────────────────
   liked: '#34D399',
   disliked: '#F87171',
 
-  // Progress bar
+  // ─── Progress bar ────────────────────────────────────────────
   progressTrack: 'rgba(255, 255, 255, 0.15)',
-  progressFill: '#6366F1',
+  progressFill: '#4ADE80',
 
-  // Text on dark / gradient backgrounds
-  textOnGradient: '#FFFFFF',
-  textMuted: 'rgba(255, 255, 255, 0.7)',
+  // ─── Text ────────────────────────────────────────────────────
+  textPrimary: '#FFFFFF',
+  textMuted: 'rgba(255, 255, 255, 0.6)',
+  textOnAccent: '#0A0E1A',
 } as const;

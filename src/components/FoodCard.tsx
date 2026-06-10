@@ -96,7 +96,7 @@ const styles = StyleSheet.create({
   name: {
     fontSize: 24,
     fontWeight: '700',
-    color: CalorAIColors.textOnGradient,
+    color: CalorAIColors.textPrimary,
   },
   category: {
     fontSize: 14,
@@ -119,6 +119,6 @@ const styles = StyleSheet.create({
   },
   tagText: {
     fontSize: 12,
-    color: CalorAIColors.textOnGradient,
+    color: CalorAIColors.textPrimary,
   },
 });

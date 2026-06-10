@@ -22,9 +22,31 @@ export const Layout = {
     height: 6,
     borderRadius: 3,
   },
+  button: {
+    height: 56,
+    borderRadius: 16,
+  },
   animation: {
+    /** Swipe card exit duration (ms) */
     swipeDuration: 300,
     springDamping: 15,
     springStiffness: 150,
+    /** Entrance animation duration (ms) */
+    entranceDuration: 600,
+    /** translateY distance for entrance slide-up */
+    entranceTranslateY: 20,
+    /** Stagger delays for intro screen elements (ms) */
+    stagger: {
+      logo: 300,
+      title: 400,
+      subtitle: 550,
+      button: 700,
+    },
+  },
+  spacing: {
+    /** Horizontal page padding */
+    pagePadding: 24,
+    /** Gap between intro screen content sections */
+    sectionGap: 16,
   },
 } as const;

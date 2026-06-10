@@ -14,9 +14,11 @@ import type { TasteState, TasteAction, TasteProfile } from '@/types/food';
 // ─── Initial State ─────────────────────────────────────────────
 
 const emptyProfile: TasteProfile = {
-  scores: {},
+  title: '',
+  description: '',
+  traits: [],
   topCategories: [],
-  totalReactions: 0,
+  topTags: [],
 };
 
 export const initialTasteState: TasteState = {
@@ -31,8 +33,10 @@ export const initialTasteState: TasteState = {
 export function tasteReducer(state: TasteState, action: TasteAction): TasteState {
   switch (action.type) {
     case 'REACT_TO_FOOD':
-      // TODO: append reaction, recompute profile scores
-      return state;
+      return {
+        ...state,
+        reactions: [...state.reactions, action.payload]
+      };
 
     case 'NEXT_FOOD':
       // TODO: increment currentIndex

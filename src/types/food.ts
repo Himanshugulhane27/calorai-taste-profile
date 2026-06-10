@@ -26,18 +26,12 @@ export interface FoodReaction {
 
 // ─── Taste Profile (derived from reactions) ────────────────────
 
-/**
- * Per-category score computed from the user's swipe history.
- * Keys are the `category` strings found in foods.json —
- * not a hardcoded union, so this works with any dataset.
- */
-export type TasteScores = Record<string, number>;
-
-/** The user's computed taste profile */
 export interface TasteProfile {
-  scores: TasteScores;
-  topCategories: string[];
-  totalReactions: number;
+  title: string;
+  description: string;
+  traits: string[];
+  topCategories: { category: string; count: number }[];
+  topTags: { tag: string; count: number }[];
 }
 
 // ─── Context State & Actions ───────────────────────────────────

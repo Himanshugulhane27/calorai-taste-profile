@@ -1,16 +1,15 @@
-import React, { useEffect, useMemo } from 'react';
+import React, { useEffect } from 'react';
 import { StyleSheet, Text, View, ScrollView, Pressable } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import { LinearGradient } from 'expo-linear-gradient';
 import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Stack, useRouter } from 'expo-router';
 import { Image } from 'expo-image';
-import Animated, { FadeIn, FadeInUp, SlideInRight, useSharedValue, withSpring, useAnimatedStyle, withDelay } from 'react-native-reanimated';
+import Animated, { FadeIn, FadeInUp, SlideInRight, useSharedValue, withSpring, useAnimatedStyle } from 'react-native-reanimated';
 import { Ionicons } from '@expo/vector-icons';
 
-import foodsData from '@/data/foods.json';
-import type { Food } from '@/types/food';
 import { useTaste } from '@/hooks/useTaste';
+import { useTasteProfile } from '@/hooks/useTasteProfile';
 import { CalorAIColors } from '@/constants/colors';
 import { Layout } from '@/constants/layout';
 import { Spacing } from '@/constants/theme';
@@ -19,56 +18,12 @@ import GlassCard from '@/components/GlassCard';
 export default function ResultsScreen() {
   const router = useRouter();
   const insets = useSafeAreaInsets();
-  const { state, dispatch } = useTaste();
-
-  // ─── Data Derivation ──────────────────────────────────────────
+  const { dispatch } = useTaste();
   
-  const { likedFoods, dislikedFoods } = useMemo(() => {
-    const liked: Food[] = [];
-    const disliked: Food[] = [];
-    
-    state.reactions.forEach(reaction => {
-      const food = foodsData.find(f => f.id === reaction.foodId);
-      if (food) {
-        if (reaction.direction === 'right') liked.push(food as Food);
-        if (reaction.direction === 'left') disliked.push(food as Food);
-      }
-    });
-
-    return { likedFoods: liked, dislikedFoods: disliked };
-  }, [state.reactions]);
+  const { profile, likedFoods, dislikedFoods } = useTasteProfile();
 
   const totalSwiped = likedFoods.length + dislikedFoods.length;
   const matchPercentage = totalSwiped > 0 ? Math.round((likedFoods.length / totalSwiped) * 100) : 0;
-
-  // Derive top category
-  const topCategory = useMemo(() => {
-    if (likedFoods.length === 0) return 'Undecided';
-    const counts: Record<string, number> = {};
-    likedFoods.forEach(f => { counts[f.category] = (counts[f.category] || 0) + 1; });
-    return Object.keys(counts).reduce((a, b) => counts[a] > counts[b] ? a : b);
-  }, [likedFoods]);
-
-  // Derive simple tag breakdown
-  const tagBreakdown = useMemo(() => {
-    const counts: Record<string, number> = {};
-    likedFoods.forEach(f => {
-      f.tags.forEach(tag => {
-        counts[tag] = (counts[tag] || 0) + 1;
-      });
-    });
-    return Object.entries(counts)
-      .sort((a, b) => b[1] - a[1])
-      .slice(0, 4); // Top 4 tags
-  }, [likedFoods]);
-
-  const profileLabel = likedFoods.length === 0 
-    ? "The Blank Canvas"
-    : `The ${topCategory} Explorer`;
-
-  const profileDesc = likedFoods.length === 0
-    ? "You didn't like anything! Are you a picky eater or just hard to please?"
-    : `You have a strong affinity for ${topCategory} cuisine, with a diverse palate spanning ${tagBreakdown.length} flavor profiles.`;
 
   // ─── Animations ───────────────────────────────────────────────
   
@@ -78,7 +33,7 @@ export default function ResultsScreen() {
   useEffect(() => {
     cardScale.value = withSpring(1, { damping: 15, stiffness: 100 });
     cardOpacity.value = withSpring(1);
-  }, []);
+  }, [cardScale, cardOpacity]);
 
   const cardAnimatedStyle = useAnimatedStyle(() => ({
     transform: [{ scale: cardScale.value }],
@@ -117,13 +72,13 @@ export default function ResultsScreen() {
                 <View style={styles.profileIconContainer}>
                   <Ionicons name="restaurant" size={32} color={CalorAIColors.accent} />
                 </View>
-                <Text style={styles.profileLabel}>{profileLabel}</Text>
-                <Text style={styles.profileDesc}>{profileDesc}</Text>
+                <Text style={styles.profileLabel}>{profile.title}</Text>
+                <Text style={styles.profileDesc}>{profile.description}</Text>
                 
                 <View style={styles.badgesRow}>
-                  {tagBreakdown.slice(0,3).map(([tag], i) => (
+                  {profile.traits.map((trait, i) => (
                     <View key={i} style={styles.badge}>
-                      <Text style={styles.badgeText}>{tag}</Text>
+                      <Text style={styles.badgeText}>{trait}</Text>
                     </View>
                   ))}
                 </View>
@@ -171,11 +126,11 @@ export default function ResultsScreen() {
             )}
 
             {/* Category Breakdown */}
-            {tagBreakdown.length > 0 && (
+            {profile.topTags.length > 0 && (
               <View style={styles.section}>
                 <Text style={styles.sectionTitle}>Flavor Breakdown</Text>
                 <View style={styles.breakdownContainer}>
-                  {tagBreakdown.map(([tag, count], i) => {
+                  {profile.topTags.slice(0, 4).map(({ tag, count }, i) => {
                     const widthPct = Math.max(15, (count / likedFoods.length) * 100);
                     return (
                       <Animated.View key={tag} entering={FadeIn.delay(400 + i * 100)} style={styles.breakdownRow}>

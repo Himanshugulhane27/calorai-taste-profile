@@ -12,7 +12,7 @@
 import React from 'react';
 import { StyleSheet, Text, View, type StyleProp, type ViewStyle } from 'react-native';
 import { Image } from 'expo-image';
-import { GlassCard } from '@/components/GlassCard';
+import GlassCard from '@/components/GlassCard';
 import { Layout } from '@/constants/layout';
 import { CalorAIColors } from '@/constants/colors';
 import type { Food, SwipeDirection } from '@/types/food';

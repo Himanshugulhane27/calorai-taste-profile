@@ -26,6 +26,26 @@ export const Layout = {
     height: 56,
     borderRadius: 16,
   },
+  swipe: {
+    /** Fraction of screen width to trigger a swipe */
+    threshold: SCREEN_WIDTH * 0.35,
+    /** How far off-screen to animate the exiting card */
+    exitDistance: SCREEN_WIDTH * 1.5,
+    /** Rotation interpolation input range (px) */
+    rotationInputRange: [-200, 0, 200] as const,
+    /** Rotation interpolation output range (deg) */
+    rotationOutputRange: [-15, 0, 15] as const,
+    /** Max overlay opacity when swiping */
+    overlayMaxOpacity: 0.8,
+  },
+  stack: {
+    /** How many cards to render in the visible stack */
+    maxVisible: 3,
+    /** Scale decrease per card behind the top card */
+    scaleDecrement: 0.05,
+    /** TranslateY offset per card behind the top card */
+    translateYOffset: 8,
+  },
   animation: {
     /** Swipe card exit duration (ms) */
     swipeDuration: 300,

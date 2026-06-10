@@ -1,0 +1,72 @@
+[
+  {
+    "id": 1,
+    "name": "Margherita Pizza",
+    "image": "https://images.unsplash.com/photo-1574071318508-1cdbab80d002?w=400",
+    "category": "Italian",
+    "tags": ["vegetarian", "cheese"]
+  },
+  {
+    "id": 2,
+    "name": "Sushi Roll",
+    "image": "https://images.unsplash.com/photo-1579871494447-9811cf80d66c?w=400",
+    "category": "Japanese",
+    "tags": ["seafood", "rice"]
+  },
+  {
+    "id": 3,
+    "name": "Tacos Al Pastor",
+    "image": "https://images.unsplash.com/photo-1551504734-5ee1c4a1479b?w=400",
+    "category": "Mexican",
+    "tags": ["pork", "spicy"]
+  },
+  {
+    "id": 4,
+    "name": "Pad Thai",
+    "image": "https://images.unsplash.com/photo-1559314809-0d155014e29e?w=400",
+    "category": "Thai",
+    "tags": ["noodles", "peanuts"]
+  },
+  {
+    "id": 5,
+    "name": "Butter Chicken",
+    "image": "https://images.unsplash.com/photo-1603894584373-5ac82b2ae398?w=400",
+    "category": "Indian",
+    "tags": ["chicken", "creamy"]
+  },
+  {
+    "id": 6,
+    "name": "Caesar Salad",
+    "image": "https://images.unsplash.com/photo-1546793665-c74683f339c1?w=400",
+    "category": "American",
+    "tags": ["vegetarian", "healthy"]
+  },
+  {
+    "id": 7,
+    "name": "Croissant",
+    "image": "https://images.unsplash.com/photo-1555507036-ab1f4038024a?w=400",
+    "category": "French",
+    "tags": ["pastry", "breakfast"]
+  },
+  {
+    "id": 8,
+    "name": "Bibimbap",
+    "image": "https://images.unsplash.com/photo-1553163147-622ab57be1c7?w=400",
+    "category": "Korean",
+    "tags": ["rice", "vegetables"]
+  },
+  {
+    "id": 9,
+    "name": "Fish and Chips",
+    "image": "https://images.unsplash.com/photo-1579208030886-b1715a638706?w=400",
+    "category": "British",
+    "tags": ["seafood", "fried"]
+  },
+  {
+    "id": 10,
+    "name": "Chocolate Lava Cake",
+    "image": "https://images.unsplash.com/photo-1624353365286-3f8d62daad51?w=400",
+    "category": "Dessert",
+    "tags": ["chocolate", "sweet"]
+  }
+]

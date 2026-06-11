@@ -71,7 +71,7 @@ src/
 │   ├── index.tsx
 │   ├── swipe.tsx
 │   ├── results.tsx
-│   └── explore.tsx
+│
 ├── components/
 │   ├── FoodCard.tsx
 │   ├── GlassCard.tsx

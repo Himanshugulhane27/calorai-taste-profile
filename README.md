@@ -47,6 +47,8 @@ CalorAI Taste Profile is a 3-screen React Native app built with Expo. It recreat
 
 ## Tech Stack
 
+| Library | Version | Purpose |
+|----------|----------|----------|
 | Expo SDK | 54.0.0 | Managed workflow, build tooling |
 | Expo Router | 6.0.24 | File-based navigation |
 | React Native Reanimated | 4.1.1 | UI-thread animations (swipe, transitions) |
@@ -56,7 +58,6 @@ CalorAI Taste Profile is a 3-screen React Native app built with Expo. It recreat
 | Expo Haptics | 15.0.8 | Tactile feedback on swipe |
 | Expo Image | 3.0.11 | Performant image loading with prefetch |
 | TypeScript | 5.9.2 | Type safety throughout |
-
 ---
 
 ## Folder Structure

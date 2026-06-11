@@ -17,7 +17,6 @@ A swipeable food preference interface built as a React Native internship test as
 - [AI Usage Disclosure](#ai-usage-disclosure)
 - [Time Breakdown](#time-breakdown)
 - [Known Limitations](#known-limitations)
-- [Screenshots](#screenshots)
 - [Demo Video](#demo-video)
 - [Future Improvements](#future-improvements)
 

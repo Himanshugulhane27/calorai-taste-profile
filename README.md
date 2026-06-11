@@ -106,7 +106,7 @@ src/
 
 ```bash
 # Clone the repository
-git clone https://github.com/your-username/calorai-taste-profile.git
+git clone https://github.com/Himanshugulhane27/calorai-taste-profile.git
 cd calorai-taste-profile
 
 # Install dependencies
@@ -214,25 +214,10 @@ All architectural decisions, platform-specific debugging, and device testing wer
 
 ---
 
-## Screenshots
-
-> Replace the placeholders below with actual screenshots before submitting.
-
-| Intro Screen | Swipe Screen | Results Screen |
-|---|---|---|
-| `screenshots/intro.png` | `screenshots/swipe.png` | `screenshots/results.png` |
-
-**iOS vs Android comparison:**
-
-| iOS (Glass blur) | Android (Solid fallback) |
-|---|---|
-| `screenshots/ios-glass.png` | `screenshots/android-glass.png` |
-
----
 
 ## Demo Video
 
-📹 **Walkthrough video:** [Link to Loom / YouTube unlisted / Google Drive]
+📹 **Walkthrough video:** [https://drive.google.com/file/d/1dVJWNWe7FN6PQz--mvNv4M2Bo7Uybet1/view?usp=sharing]
 
 The video covers:
 - Full app demo on iOS Simulator and Android Emulator

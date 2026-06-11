@@ -67,35 +67,28 @@ CalorAI Taste Profile is a 3-screen React Native app built with Expo. It recreat
 ```
 src/
 ├── app/
-│   ├── (tabs)/
-│   │   ├── _layout.tsx          # Tab navigator with glass bottom bar
-│   │   ├── index.tsx            # Intro screen
-│   │   ├── swipe.tsx            # Swipe screen
-│   │   └── results.tsx          # Results screen
+│   ├── _layout.tsx
+│   ├── index.tsx
+│   ├── swipe.tsx
+│   ├── results.tsx
+│   └── explore.tsx
 ├── components/
-│   ├── cards/
-│   │   ├── FoodCard.tsx         # Animated swipe card
-│   │   ├── CardStack.tsx        # Stack with peek cards
-│   │   └── SwipeIndicator.tsx   # Like/dislike overlay labels
-│   ├── ui/
-│   │   ├── GlassCard.tsx        # Platform-aware glass component
-│   │   ├── GradientBg.tsx       # Reusable gradient background
-│   │   ├── ProgressBar.tsx      # Animated progress bar
-│   │   └── ActionButton.tsx     # Circular like/dislike buttons
-│   └── navigation/
-│       └── GlassTabBar.tsx      # Custom tab bar component
-├── hooks/
-│   ├── useSwipeGesture.ts       # PanGesture logic
-│   └── useTasteProfile.ts       # Swipe result analysis
+│   ├── FoodCard.tsx
+│   ├── GlassCard.tsx
+│   └── ProgressBar.tsx
 ├── context/
-│   └── TasteContext.tsx         # Global swipe state
+│   └── TasteContext.tsx
+├── hooks/
+│   ├── useTaste.ts
+│   └── useTasteProfile.ts
 ├── data/
-│   └── foods.ts                 # Typed food data
+│   └── foods.json
 ├── constants/
-│   ├── theme.ts                 # Colors, spacing, typography tokens
-│   └── layout.ts                # Screen dimensions
-└── utils/
-    └── profileAnalysis.ts       # Tag scoring and profile logic
+│   ├── colors.ts
+│   ├── layout.ts
+│   └── theme.ts
+└── types/
+    └── food.ts
 ```
 
 ---
@@ -138,8 +131,8 @@ The app targets **Expo Go** — no custom dev client or EAS build is required.
 ### Navigation — Expo Router
 File-based routing via Expo Router 6 was chosen over a manual `react-navigation` setup. The `(tabs)` group handles the bottom navigation layout, and `router.replace` is used for the swipe → results transition to prevent back-navigation to an empty deck.
 
-### State management — Context + useReducer
-A single `TasteContext` holds the `liked` and `disliked` food arrays. No external state library (Redux, Zustand) was added — the scope of 3 screens does not justify that complexity. `currentIndex` is kept as local `useState` in `swipe.tsx` because it is ephemeral UI state, not shared data.
+### State Management — Context + useReducer
+TasteContext manages swipe reactions and currentIndex, providing a single source of truth across the Swipe and Results screens. React Context with useReducer was sufficient for this project's scope, avoiding the need for external state libraries such as Redux or Zustand.
 
 ### Animations — Reanimated 4 only
 All animations run on the UI thread via `useSharedValue`, `useAnimatedStyle`, and `withSpring`/`withTiming`. The legacy `Animated` API from `react-native` is not used anywhere in the project. This is enforced by the Reanimated Babel plugin.

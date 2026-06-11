@@ -144,7 +144,7 @@ All animations run on the UI thread via `useSharedValue`, `useAnimatedStyle`, an
 - `expo-image` prefetches the next two food images on every `currentIndex` change.
 
 ### Component boundaries
-`GlassCard`, `ProgressBar`, `GradientBg`, and `ActionButton` are fully decoupled UI primitives. No screen-level logic leaks into them. This keeps screens thin and components independently reusable.
+GlassCard and ProgressBar are fully decoupled UI primitives. No screen-level logic leaks into them, keeping screens thin and components independently reusable.
 
 ---
 
@@ -186,7 +186,7 @@ All architectural decisions, platform-specific debugging, and device testing wer
 | Phase | Task | Time |
 |---|---|---|
 | Setup | Project init, dependencies, Babel config, theme constants, foods.ts | ~30 min |
-| Core UI | GlassCard, GradientBg, ProgressBar, ActionButton, GlassTabBar | ~45 min |
+| Core UI | GlassCard, FoodCard, ProgressBar | ~45 min |
 | Intro Screen | Layout, entrance animations, CTA navigation | ~30 min |
 | Swipe Screen | CardStack wiring, gesture callbacks, context integration, progress, navigation | ~2 hrs |
 | Results Screen | Taste profile logic, category breakdown, liked foods grid, animations | ~45 min |

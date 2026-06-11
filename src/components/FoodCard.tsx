@@ -23,6 +23,7 @@ import React, {
   useEffect,
   useImperativeHandle,
   useRef,
+  useMemo,
 } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { Gesture, GestureDetector } from 'react-native-gesture-handler';
@@ -68,6 +69,8 @@ export interface FoodCardProps {
   food: Food;
   /** Fires after the exit animation completes */
   onSwipe: (direction: SwipeDirection) => void;
+  /** Fires when a gesture passes threshold and commits to a swipe */
+  onSwipeStart: () => void;
   /** Whether this card accepts gestures (default: true) */
   isActive?: boolean;
 }
@@ -77,8 +80,8 @@ export interface FoodCardRef {
   swipeLeft: () => void;
 }
 
-const FoodCard = forwardRef<FoodCardRef, FoodCardProps>(
-  function FoodCard({ food, onSwipe, isActive = true }, ref) {
+const FoodCardComponent = forwardRef<FoodCardRef, FoodCardProps>(
+  function FoodCard({ food, onSwipe, onSwipeStart, isActive = true }, ref) {
     // ── Shared values ──────────────────────────────────────────
     const translateX = useSharedValue(0);
     const translateY = useSharedValue(0);
@@ -146,6 +149,7 @@ const FoodCard = forwardRef<FoodCardRef, FoodCardProps>(
       .onEnd((event) => {
         'worklet';
         if (Math.abs(translateX.value) > SWIPE_THRESHOLD) {
+          runOnJS(onSwipeStart)();
           // ── Commit swipe ──
           const direction: SwipeDirection =
             translateX.value > 0 ? 'right' : 'left';
@@ -263,6 +267,10 @@ const FoodCard = forwardRef<FoodCardRef, FoodCardProps>(
   },
 );
 
+export const FoodCard = React.memo(FoodCardComponent, (prev, next) => {
+  return prev.food.id === next.food.id && prev.isActive === next.isActive;
+});
+
 export default FoodCard;
 
 // ═══════════════════════════════════════════════════════════════
@@ -316,6 +324,8 @@ export interface CardStackProps {
   currentIndex: number;
   /** Fires when the top card is swiped */
   onSwipe: (direction: SwipeDirection) => void;
+  /** Fires when a gesture commits to lock UI */
+  onSwipeStart: () => void;
 }
 
 export interface CardStackRef {
@@ -324,7 +334,7 @@ export interface CardStackRef {
 }
 
 export const CardStack = forwardRef<CardStackRef, CardStackProps>(
-  function CardStack({ foods, currentIndex, onSwipe }, ref) {
+  function CardStack({ foods, currentIndex, onSwipe, onSwipeStart }, ref) {
     const topCardRef = useRef<FoodCardRef>(null);
 
     useImperativeHandle(
@@ -336,16 +346,19 @@ export const CardStack = forwardRef<CardStackRef, CardStackProps>(
       [],
     );
 
-    const visibleFoods = foods.slice(
-      currentIndex,
-      currentIndex + Layout.stack.maxVisible,
-    );
+    const visibleFoods = useMemo(() => {
+      // Slice and reverse once per index update, rather than every render
+      return foods.slice(
+        currentIndex,
+        currentIndex + Layout.stack.maxVisible,
+      ).reverse();
+    }, [foods, currentIndex]);
 
     // Render back-to-front so the top card (stackIndex 0) is
     // the last element and visually on top.
     return (
       <View style={stackStyles.container}>
-        {[...visibleFoods].reverse().map((food) => {
+        {visibleFoods.map((food: Food) => {
           const stackIndex =
             foods.indexOf(food) - currentIndex;
 
@@ -355,6 +368,7 @@ export const CardStack = forwardRef<CardStackRef, CardStackProps>(
                 ref={stackIndex === 0 ? topCardRef : undefined}
                 food={food}
                 onSwipe={onSwipe}
+                onSwipeStart={onSwipeStart}
                 isActive={stackIndex === 0}
               />
             </AnimatedCardWrapper>
@@ -460,6 +474,8 @@ const styles = StyleSheet.create({
 
 const stackStyles = StyleSheet.create({
   container: {
+    flex: 1,
+    width: '100%',
     alignItems: 'center',
     justifyContent: 'center',
   },

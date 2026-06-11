@@ -23,11 +23,20 @@ const TOTAL_FOODS = foodsData.length;
 export default function SwipeScreen() {
   const router = useRouter();
   const insets = useSafeAreaInsets();
-  const { dispatch } = useTaste();
+  const { state, dispatch } = useTaste();
+  const currentIndex = state.currentIndex;
   
-  const [currentIndex, setCurrentIndex] = useState(0);
   const isAnimating = useRef(false);
   const cardStackRef = useRef<CardStackRef>(null);
+
+  // Release lock only after React completes the next-card render
+  useEffect(() => {
+    isAnimating.current = false;
+  }, [currentIndex]);
+
+  const onSwipeStart = useCallback(() => {
+    isAnimating.current = true;
+  }, []);
 
   const visibleFoods = useMemo(() => {
     return foodsData.slice(currentIndex, currentIndex + Layout.stack.maxVisible);
@@ -47,9 +56,6 @@ export default function SwipeScreen() {
   }, [router]);
 
   const handleSwipe = useCallback((direction: SwipeDirection) => {
-    if (isAnimating.current) return;
-    isAnimating.current = true;
-
     const food = foodsData[currentIndex];
     
     // Dispatch reaction BEFORE navigation logic
@@ -66,19 +72,19 @@ export default function SwipeScreen() {
     if (nextIndex >= TOTAL_FOODS) {
       navigateToResults();
     } else {
-      setCurrentIndex(nextIndex);
       dispatch({ type: 'NEXT_FOOD' });
-      isAnimating.current = false;
     }
   }, [currentIndex, dispatch, navigateToResults]);
 
   const onPressLike = () => {
     if (isAnimating.current) return;
+    isAnimating.current = true;
     cardStackRef.current?.swipeRight();
   };
 
   const onPressDislike = () => {
     if (isAnimating.current) return;
+    isAnimating.current = true;
     cardStackRef.current?.swipeLeft();
   };
 
@@ -118,6 +124,7 @@ export default function SwipeScreen() {
                 foods={foodsData as Food[]}
                 currentIndex={currentIndex}
                 onSwipe={handleSwipe}
+                onSwipeStart={onSwipeStart}
               />
             ) : (
               <View style={styles.emptyState}>

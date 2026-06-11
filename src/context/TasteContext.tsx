@@ -39,8 +39,7 @@ export function tasteReducer(state: TasteState, action: TasteAction): TasteState
       };
 
     case 'NEXT_FOOD':
-      // TODO: increment currentIndex
-      return state;
+      return { ...state, currentIndex: state.currentIndex + 1 };
 
     case 'RESET':
       return initialTasteState;
